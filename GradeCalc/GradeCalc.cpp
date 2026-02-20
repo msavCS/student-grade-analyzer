@@ -12,12 +12,9 @@ void printGrades(int);
 void printStats(int, int, int);
 
 //global variables
-int minA = 90;
-int minB = 80;
-int minC = 70;
-int minD = 60;
-long failingGrades;
-long passingGrades;
+int minA = 90 , minB = 80 , minC = 70 , minD = 60;
+long failingGrades = 0;
+long passingGrades = 0;
 
 //global constants
 const long maxStudents = 100;
@@ -84,42 +81,18 @@ int main() {
 		student++;
 	}
 
-	int best = percentGrade[0];
-	int lowest = percentGrade[0];
+	int best = percentGrade[0], lowest = percentGrade[0];
+	long sumOfGrades = 0;
 
-	//compares every grade to find best
+	//finds best, lowest, sum of  the grades & passing/failing totals
 	for (int i = 0; i < studentAmount; i++) {
-
-		if (percentGrade[i] > best) {
-			best = percentGrade[i];
-		}
-	}
-	//compares every grade to find lowest
-	for (int i = 0; i < studentAmount; i++) {
-
-		if (percentGrade[i] < lowest) {
-			lowest = percentGrade[i];
-		}
-	}
-
-	long sumOfGrades = 1;
-
-	//finds sum of grades
-	for (int i = 0; i < studentAmount; i++) {
+		if (percentGrade[i] > best) best = percentGrade[i];
+		if (percentGrade[i] < lowest) lowest = percentGrade[i];
 		sumOfGrades += percentGrade[i];
-	}
-
-	int average = sumOfGrades / studentAmount;
-	
-	//finds sum of failing grades
-	for (int i = 0; i < studentAmount; i++) {
 		if (percentGrade[i] < minD) failingGrades++;
+		else passingGrades++;
 	}
-
-	//finds sum of passing grades
-	for (int i = 0; i < studentAmount; i++) {
-		if (percentGrade[i] >= minD) passingGrades++;
-	}
+	int average = sumOfGrades / studentAmount;
 
 	//Clear Screen
 	system("cls");
@@ -137,12 +110,12 @@ int main() {
 
 //Function definitions:
 
-//returns letter grade according to value of percentGrade array index
+//returns letter grade according to percent grade
 char getGrade(int percentGrade) {
 	if (percentGrade >= minA) return 'A';
-	if (percentGrade >= minB && percentGrade < minA) return 'B';
-	if (percentGrade >= minC && percentGrade < minB) return 'C';
-	if (percentGrade >= minD && percentGrade < minC) return 'D';
+	if (percentGrade >= minB) return 'B';
+	if (percentGrade >= minC) return 'C';
+	if (percentGrade >= minD) return 'D';
 	else return 'F';
 
 }
